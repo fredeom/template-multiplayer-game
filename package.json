@@ -1,0 +1,21 @@
+{
+  "name": "helloworld",
+  "main": "index.html",
+  "window": {
+    "toolbar": false,
+    "width": 800,
+    "height": 800,
+    "position": "center",
+    "aaframe": true,
+    "aatransparent": true
+  },
+  "scripts": {
+    "buildsqlite": "npm install sqlite3 --build-from-source --sqlite=/tmp/sqlite-src-3350500 --runtime=node-webkit --target_arch=x64 --target=0.32.1",
+    "start": "../../nw ."
+  },
+  "dependencies": {
+    "nwjs": "^1.4.4",
+    "redux": "^4.1.0",
+    "sqlite3": "^5.0.2"
+  }
+}

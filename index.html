@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Multiplayer game</title>
+    <link rel="stylesheet" href="src/css/styles.css" />
+  </head>
+  <body>
+    <!--h1>Hello World!</h1>
+    <div>
+      <div class="buttons">
+        <button onClick="add();">Add</button>
+        <input id="input" placeholder="Enter something" />
+      </div>
+    </div>
+    <ul id="database">
+    </ul>
+    <label id="keys">asdf</label>
+    <div class="man"></div-->
+    <!--script>
+      class S {
+        constructor() {
+          this.privates = (function () {
+            let z = 5;
+            return {
+              getZ: () => z,
+              setZ: (value) => z = value
+            }
+          })();
+        }
+        getZ = () => this.privates.getZ();
+        setZ = (value) => this.privates.setZ(value);
+      }
+      z = new S();
+      z.setZ(111);
+      //alert(z.getZ());
+
+      var keys = new Set();
+      const keysElem = document.getElementById('keys');
+      const manElem = document.querySelectorAll('.man')[0];
+      let manX = 100;
+      let manY = 100;
+      const showKeys = () => {
+        keysElem.textContent = [...keys].join(' ');
+      };
+
+      document.addEventListener("keydown", (e) => {
+        keys.add(e.key.toLowerCase());
+      });
+      document.addEventListener("keyup", (e) => {
+        keys.delete(e.key.toLowerCase());
+      });
+      const move = () => {
+        let dx = 0, dy = 0;
+        if (keys.has('a') && !keys.has('d')) dx = -1;
+        if (keys.has('d') && !keys.has('a')) dx = +1;
+        if (keys.has('w') && !keys.has('s')) dy = -1;
+        if (keys.has('s') && !keys.has('w')) dy = +1;
+        manX += dx;
+        manY += dy;
+        manElem.style.top = manY + "px";
+        manElem.style.left = manX + "px";
+      }
+      const step = () => {
+        move();
+        requestAnimationFrame(step);
+      }
+      step();
+
+      var sqlite3;
+      var db;
+      function initDb() {
+        sqlite3 = require('sqlite3').verbose();
+        db = new sqlite3.Database('./tmp/db');
+        db.serialize(function() {
+          db.run("CREATE TABLE IF NOT EXISTS lorem (info TEXT)");
+        });
+      };
+
+      function showDb() {
+        const rows = document.getElementById("database");
+        rows.innerHTML = "";
+        db.serialize(function() {
+          db.each("SELECT rowid AS id, info FROM lorem", function(err, row) {
+            const item = document.createElement("li");
+            item.textContent = "" + row.id + ": " + row.info;
+            rows.appendChild(item);
+          });
+        });
+      };
+
+      function add() {
+        const input = document.getElementById("input");
+        const value = input.value;
+        input.value = "";
+
+        db.serialize(function() {
+          const stmt = db.prepare("INSERT INTO lorem VALUES (?)");
+          stmt.run(value);
+          stmt.finalize();
+          db.get("SELECT COUNT(*) as cnt FROM lorem", [], (err, row) => {
+            if (row.cnt > 10) {
+              const sql = "DELETE FROM lorem LIMIT " + (row.cnt - 10);
+              console.log(sql);
+              db.exec(sql, () => showDb() );
+            } else {
+              showDb();
+            }
+          });
+        });
+      }
+
+      initDb();
+      showDb();
+    </script>
+    <script>
+      //nw.App.closeAllWindows();
+// Create an empty context menu
+var menu = new nw.Menu();
+
+// Add some items with label
+menu.append(new nw.MenuItem({
+  label: 'Item A',
+  click: function(){
+    alert('You have clicked at "Item A"');
+  }
+}));
+menu.append(new nw.MenuItem({ label: 'Item B' }));
+menu.append(new nw.MenuItem({ type: 'separator' }));
+menu.append(new nw.MenuItem({ label: 'Item C' }));
+
+document.addEventListener('contextmenu', function(ev) {
+  ev.preventDefault();
+  menu.popup(ev.x, ev.y);
+  return false;
+});
+
+</script-->
+    <div id="main" />
+    <script src="src/app.js"></script>
+  </body>
+</html>
