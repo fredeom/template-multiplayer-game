@@ -4,11 +4,60 @@ body {
   padding: 0;
   margin: 0;
 }
+
 #main {
   height: 100%;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#submenu1 {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  height: 100px;
+}
+
+#submenu1 > button {
+  margin-top: 10px;
+}
+
+#submenu2 {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100px;
+}
+
+#submenu2 > * {
+  margin-top: 10px;
+}
+
+#submenu2 input[type='number'] {
+  max-width: 50px;
+}
+
+#submenu3 {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100px;
+}
+
+#submenu3 > label > input {
+  max-width: 100px;
+}
+
+#submenu3 > * {
+  margin-top: 10px;
+}
+
+#submenu3 input[type='number'] {
+  max-width: 50px;
 }
 
 .myButton {

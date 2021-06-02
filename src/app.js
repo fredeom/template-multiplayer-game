@@ -4,23 +4,46 @@ const setMenu = require('src/js/menu');
 const playground = require('src/js/playground');
 const {keys, mouse} = require('src/js/controls');
 
-function render(container, store) {
+function render(container, store, renderState) {
+  [...container.children].forEach(el => {
+    if (el.style) el.style.display = 'none';
+  });
   switch (store.getState().main.view[0]) {
     case VIEW.START: {
-      container.innerHTML = "<button class='myButton'>Start Game</button>";
-      const btnStartgame = container.querySelectorAll('button')[0];
-      btnStartgame.addEventListener('click', () => {
-        store.dispatch({type: EVENT.CHANGE_VIEW, payload: [VIEW.MENU]});
-        render(container, store);
-      }, {once: true});
+      let start = container.querySelector('#start');
+      if (!start) {
+        start = document.createElement('div');
+        start.setAttribute('id', 'start');
+        start.innerHTML = "<button class='myButton'>Start Game</button>";
+        start.querySelector('button').addEventListener('click', () => {
+          store.dispatch({type: EVENT.CHANGE_VIEW, payload: [VIEW.MENU]});
+          render(container, store, renderState);
+        });
+        container.appendChild(start);
+      }
+      start.style.display = 'block';
       break;
     }
     case VIEW.MENU: {
-      setMenu(container, store, () => render(container, store));
+      let menu = container.querySelector('#menu');
+      if (!menu) {
+        menu = document.createElement('div');
+        menu.setAttribute('id', 'menu');
+        container.appendChild(menu);
+      }
+      menu.style.display = 'block';
+      setMenu(menu, store, renderState);
       break;
     }
     case VIEW.PLAYGROUND: {
-      playground.updateView(container, store, () => render(container, store));
+      let playgroundContainer = container.querySelector('#playground');
+      if (!playgroundContainer) {
+        playgroundContainer = document.createElement('div');
+        playgroundContainer.setAttribute('id', 'playground');
+        container.appendChild(playgroundContainer);
+      }
+      playgroundContainer.style.display = 'block';
+      playground.updateView(playgroundContainer, store, renderState);
       break;
     }
     default: alert('render unknown view');
@@ -70,7 +93,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   initControlEvents();
 
-  render(document.getElementById('main'), store);
+  const main = document.getElementById('main');
+
+  const renderState = () => render(main, store, renderState);
+
+  render(main, store, renderState);
 });
 
 //////////////////////////////////////////////
