@@ -5,6 +5,8 @@ const client = require('./client');
 
 const { keys, mouse } = require('./controls');
 
+const renderer = require('./renderer');
+
 function debounce(func, wait = 100) {
   let timeout;
   return function(...args) {
@@ -50,32 +52,8 @@ const playground = {
         const walls = gamestate.getWalls();
         const players = gamestate.getPlayers();
         const me = gamestate.getMe();
-        const ids = Object.keys(players);
-        const oldIds = [];
 
-        const elems = [...container.querySelectorAll('.man')].filter(elem => {
-          const dataId = parseInt(elem.getAttribute('data-id'));
-          const hasId = ids.includes(dataId);
-          if (hasId) oldIds.push(dataId); else elem.parentNode.removeChild(elem);
-          return hasId;
-        });
-
-        const newElems = ids.filter(id => !oldIds.includes(id)).map(id => {
-          const newElem = document.createElement('div');
-          newElem.classList.add('man');
-          newElem.setAttribute('data-id', id);
-          container.appendChild(newElem);
-          return newElem;
-        });
-
-        [...elems, ...newElems].forEach(elem => {
-          const id = parseInt(elem.getAttribute('data-id'));
-          const p = players[id];
-          elem.style.left = (p.getX() - 10) + 'px';
-          elem.style.top = (p.getY() - 10) + 'px';
-          elem.style.transform = 'rotate(' + p.getAngle() + 'deg)';
-          if (p === me) elem.style.background = 'green';
-        });
+        renderer(container, 'man', players, (id) => (me.getId() === id ? 'green' : 'blue'));
 
         if (keys.has('q')) {
           store.dispatch({type: EVENT.GAME.STOP});

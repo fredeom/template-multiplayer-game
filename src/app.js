@@ -37,11 +37,6 @@ function render(container, store, renderState) {
     }
     case VIEW.PLAYGROUND: {
       let playgroundContainer = container.querySelector('#playground');
-      if (!playgroundContainer) {
-        playgroundContainer = document.createElement('div');
-        playgroundContainer.setAttribute('id', 'playground');
-        container.appendChild(playgroundContainer);
-      }
       playgroundContainer.style.display = 'block';
       playground.updateView(playgroundContainer, store, renderState);
       break;
@@ -67,10 +62,23 @@ function initControlEvents() {
     }
   }
 
-  document.addEventListener("mousemove", (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
+  const playground = document.querySelector('#playground');
+
+  playground.addEventListener("mousemove", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    mouse.x = e.offsetX;
+    mouse.y = e.offsetY;
     unFocus();
+
+    return false;
+  });
+
+  document.body.addEventListener("mousemove", (e) => {
+    const rect = playground.getBoundingClientRect();
+    mouse.x = e.offsetX - rect.left;
+    mouse.y = e.offsetY - rect.top;
   });
 
   function setButtons(e) {

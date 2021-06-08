@@ -14,6 +14,8 @@ class Player {
         getY: () => y,
         getAngle: () => angle,
         setAngle: (value) => angle = value,
+        getWidth: () => 20,
+        getHeight: () => 20,
         toJSON: () => ({id, x, y, angle})
       }
     })();
